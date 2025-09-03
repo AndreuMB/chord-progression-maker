@@ -7,6 +7,19 @@
   font-weight: normal;
 }
 
+button {
+  padding: 2px;
+  border: 1 solid;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+}
+
+button:hover {
+  background-color: rgb(226, 226, 226);
+}
+
 a,
 .green {
   text-decoration: none;
@@ -32,4 +45,8 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+.active {
+  background-color: rgb(255, 0, 0) !important;
 }

@@ -2,6 +2,12 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+tonal(music theory)
+tone(play piano)
+Qwerty Hancock(piano)
+svguitar(guitar diagrams)
+db-chords(guitar chords)
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).

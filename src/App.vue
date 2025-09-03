@@ -5,6 +5,7 @@ import { onMounted, ref, useTemplateRef, type Ref } from 'vue'
 import guitarChords from '@/assets/guitarChords.json'
 import type { IChord } from './assets/guitarChordsInterface'
 import ChordDiagram from './components/ChordDiagram.vue'
+import PianoChords from './components/PianoChords.vue'
 
 // TONAL
 
@@ -150,6 +151,7 @@ const setNote2 = (note: string) => {
         <div v-if="chords && chords.length > 0" class="flex">
           <div v-for="chord in chords" class="w-40">
             <p>{{ chord.key }}</p>
+            <PianoChords :chord="chord.key + chord.suffix" class="my-2" />
             <ChordDiagram class="bg-white" :chord="chord" />
           </div>
         </div>
