@@ -5,11 +5,10 @@ import { onMounted, ref, useTemplateRef, type Ref } from 'vue'
 import guitarChords from '@/assets/guitarChords.json'
 import type { IChord } from './assets/guitarChordsInterface'
 import ChordDiagram from './components/ChordDiagram.vue'
-import PianoChords from './components/PianoChords.vue'
+import PianoKeyboard from './components/PianoKeyboard.vue'
 
 // TONAL
 
-const eChordNotes = Chord.get('E').notes
 const chordNotes = ref<null | string[]>(null)
 
 // const cScale = Scale.get('C major').notes
@@ -23,28 +22,6 @@ const chordNotes = ref<null | string[]>(null)
 // })
 
 const scaleSuffix = ref(false)
-
-const notesToChords = (notes: string[]) => {
-  chords.value = []
-  notes.forEach((note) => {
-    let chordToChord = note.split(' ')[0]
-
-    if (enharmonics[chordToChord]) {
-      chordToChord = enharmonics[chordToChord]
-    }
-
-    if (chordToChord in guitarChords.chords) {
-      // lot of variations of the chord G, Gm, Gdim...
-      const chordData = guitarChords.chords[chordToChord as ChordRoot]
-
-      // get the one we want
-      const chord = chordData.filter((chord) => chord.suffix === note.split(' ')[1])[0]
-
-      chords.value.push(chord as IChord)
-      // chordToGuitar(chord as IChord)
-    }
-  })
-}
 
 // DB-CHORDS
 
@@ -63,16 +40,11 @@ const chords: Ref<IChord[]> = ref([])
 
 const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
-const setNote2 = (note: string) => {
+const setNote = (note: string) => {
   // chords.value = []
   const scale = Scale.get(note + ' ' + (scaleSuffix.value ? 'minor' : 'major'))
 
-  // const chord = Chord.get(note)
-
   const scaleNotes = scale.notes
-
-  console.log(scale.name)
-  console.log(scale.notes)
 
   // progression generator I x x IV/V
 
@@ -95,8 +67,6 @@ const setNote2 = (note: string) => {
 
   chordNotes.value = progression
 
-  console.log(chordNotes.value)
-
   // const chordsFromChordNotes = chordNotes.value.map((note) => {
   //   // chord name
   //   return Chord.get(note).name
@@ -104,6 +74,28 @@ const setNote2 = (note: string) => {
 
   // notesToChords(chordsFromChordNotes)
   notesToChords(chordNotes.value)
+}
+
+const notesToChords = (notes: string[]) => {
+  chords.value = []
+  notes.forEach((note) => {
+    let chordToChord = note.split(' ')[0]
+
+    if (enharmonics[chordToChord]) {
+      chordToChord = enharmonics[chordToChord]
+    }
+
+    if (chordToChord in guitarChords.chords) {
+      // lot of variations of the chord G, Gm, Gdim...
+      const chordData = guitarChords.chords[chordToChord as ChordRoot]
+
+      // get the one we want
+      const chord = chordData.filter((chord) => chord.suffix === note.split(' ')[1])[0]
+
+      chords.value.push(chord as IChord)
+      // chordToGuitar(chord as IChord)
+    }
+  })
 }
 </script>
 
@@ -119,7 +111,6 @@ const setNote2 = (note: string) => {
       </div>
       <h2>svguitar</h2>
       <p>npm install --save svguitar</p>
-      <p id="chart" class="w-50 bg-white"></p>
       <div>
         <h2>db-chords</h2>
         <div class="p-2">
@@ -131,7 +122,7 @@ const setNote2 = (note: string) => {
           </button>
           <button
             v-for="note in notes"
-            @click="setNote2(note)"
+            @click="setNote(note)"
             class="p-2 bg-white text-black rounded mr-2 cursor-pointer"
           >
             {{ note }}
@@ -148,13 +139,13 @@ const setNote2 = (note: string) => {
             <span class="ml-2">{{ scaleSuffix ? 'Minor' : 'Major' }}</span>
           </label>
         </div>
-        <div v-if="chords && chords.length > 0" class="flex">
+        <div v-if="chords && chords.length > 0" class="flex mb-2">
           <div v-for="chord in chords" class="w-40">
             <p>{{ chord.key }}</p>
-            <PianoChords :chord="chord.key + chord.suffix" class="my-2" />
             <ChordDiagram class="bg-white" :chord="chord" />
           </div>
         </div>
+        <PianoKeyboard :chords="chords" class="my-2" />
       </div>
     </div>
   </main>
