@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import { Shape, SVGuitarChord, type Finger } from 'svguitar'
 import { Chord, Interval, Note, Scale } from 'tonal'
-import { onMounted, ref, useTemplateRef, type Ref } from 'vue'
+import { capitalize, onMounted, ref, useTemplateRef, type Ref } from 'vue'
 import guitarChords from '@/assets/guitarChords.json'
 import type { IChord } from './assets/guitarChordsInterface'
-import ChordDiagram from './components/ChordDiagram.vue'
 import PianoKeyboard from './components/PianoKeyboard.vue'
+import GuitarChord from './components/GuitarChord.vue'
+import GuitarDiagram from './components/GuitarDiagram.vue'
 
 // TONAL
 
 const chordNotes = ref<null | string[]>(null)
 
-// const cScale = Scale.get('C major').notes
-
-// const chordsFromChord = chordNotes.map((note) => {
-//   return Chord.get(note).name
-// })
-
-// onMounted(() => {
-//   notesToChords(chordsFromChord)
-// })
-
-const scaleSuffix = ref(false)
+const scaleSuffixToggle = ref(false)
 
 // DB-CHORDS
 
@@ -31,23 +22,30 @@ const enharmonics: Record<string, string> = {
   'G#': 'Ab',
   'D#': 'Eb',
   'A#': 'Bb',
-  'E#': 'F',
-  'B#': 'C',
-  'F##': 'Ab',
 }
 
 const chords: Ref<IChord[]> = ref([])
 
 const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
+const scaleSuffix = ref<string>('major')
+
 const setNote = (note: string) => {
   // chords.value = []
-  const scale = Scale.get(note + ' ' + (scaleSuffix.value ? 'minor' : 'major'))
-
+  const scale = Scale.get(note + ' ' + scaleSuffix.value)
   const scaleNotes = scale.notes
 
-  // progression generator I x x IV/V
+  const progression = scaleSuffixToggle.value
+    ? minorProgression(scaleNotes)
+    : majorProgression(scaleNotes)
 
+  chordNotes.value = progression
+
+  notesToChords(chordNotes.value)
+}
+
+// major progression generator I x x IV/V
+const majorProgression = (scaleNotes: string[]) => {
   // start chord
   const CHORD_I = scaleNotes[0] + ' major'
 
@@ -64,16 +62,58 @@ const setNote = (note: string) => {
   const randomM2 = middleChords[Math.floor(Math.random() * middleChords.length)] + ' minor'
 
   const progression = [CHORD_I, randomM1, randomM2, randomF]
+  return progression
+}
 
-  chordNotes.value = progression
+// minor progression generator i/VI x x x
+const minorProgression = (scaleNotes: string[]) => {
+  // start chord
+  const CHORD_i = scaleNotes[0] + ' minor'
+  const CHORD_VI = scaleNotes[5] + ' major'
+  const startChords = [CHORD_i, CHORD_VI]
+  const randomStart = startChords[Math.floor(Math.random() * startChords.length)]
 
-  // const chordsFromChordNotes = chordNotes.value.map((note) => {
-  //   // chord name
-  //   return Chord.get(note).name
-  // })
+  // final chord
+  const CHORD_III = scaleNotes[2] + ' major'
+  const CHORD_iv = scaleNotes[3] + ' minor'
+  const CHORD_v = scaleNotes[4] + ' minor'
+  const CHORD_V = scaleNotes[4] + ' major' // not in scale but can fit well and make tension
+  const CHORD_VII = scaleNotes[6] + ' major'
+  const scaleChords = startChords.concat([CHORD_III, CHORD_iv, CHORD_v, CHORD_V, CHORD_VII])
+  const randomChord1 = scaleChords[Math.floor(Math.random() * scaleChords.length)]
+  const randomChord2 = scaleChords[Math.floor(Math.random() * scaleChords.length)]
+  const randomChord3 = scaleChords[Math.floor(Math.random() * scaleChords.length)]
 
-  // notesToChords(chordsFromChordNotes)
-  notesToChords(chordNotes.value)
+  // const progression = [randomStart]
+  // progression.push(pickChord(progression, scaleNotes))
+  // progression.push(pickChord(progression, scaleNotes))
+  // progression.push(pickChord(progression, scaleNotes))
+  const progression = [randomStart, randomChord1, randomChord2, randomChord3]
+
+  progression.forEach((cp, index) => {
+    const chordQuantity = progression.filter((c) => c == cp).length
+    console.log(cp + ' ' + chordQuantity)
+    if (chordQuantity > 2) {
+      const scaleChordsReduced = scaleChords.filter((c) => c != cp)
+      console.log(scaleChordsReduced)
+      const rc = scaleChordsReduced[Math.floor(Math.random() * scaleChords.length)]
+      progression[index] = rc
+    }
+  })
+
+  return progression
+}
+
+// check dont repeat more than 2 times
+const pickChord = (progression: string[], scaleChords: string[]) => {
+  const MAX_TRIES = 20
+  let chord = ''
+  let tries = 0
+  do {
+    chord = scaleChords[Math.floor(Math.random() * scaleChords.length)]
+    tries++
+  } while (progression.filter((c) => c === chord).length >= 2 && tries < MAX_TRIES)
+  return chord
 }
 
 const notesToChords = (notes: string[]) => {
@@ -81,6 +121,8 @@ const notesToChords = (notes: string[]) => {
   notes.forEach((note) => {
     let chordToChord = note.split(' ')[0]
 
+    // adapt the chords to the ones are in the guitar-db
+    chordToChord = Note.simplify(chordToChord)
     if (enharmonics[chordToChord]) {
       chordToChord = enharmonics[chordToChord]
     }
@@ -93,60 +135,42 @@ const notesToChords = (notes: string[]) => {
       const chord = chordData.filter((chord) => chord.suffix === note.split(' ')[1])[0]
 
       chords.value.push(chord as IChord)
-      // chordToGuitar(chord as IChord)
     }
   })
 }
 </script>
 
 <template>
-  <main>
-    <div>
-      <h1>Libraries test</h1>
-      <h2>tonal</h2>
-      <p>npm install --save tonal</p>
-      <div>
-        <p>{{ chordNotes }}</p>
-        <!-- <p>{{ chordsFromChord }}</p> -->
+  <main class="w-full flex flex-col text-center items-center">
+    <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1>
+    <div class="border p-2">
+      <h2 class="mb-2">Select a scale:</h2>
+      <div class="buttons flex w-180 justify-between">
+        <button @click="() => (chords = [])">CLEAR</button>
+        <button v-for="note in notes" @click="setNote(note)">
+          {{ note }}
+        </button>
+        <label class="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            class="sr-only peer"
+            v-model="scaleSuffixToggle"
+            @click="() => (scaleSuffixToggle ? (scaleSuffix = 'major') : (scaleSuffix = 'minor'))"
+          />
+          <div
+            class="relative w-11 h-6 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+          ></div>
+          <span class="ml-2">{{ capitalize(scaleSuffix) }}</span>
+        </label>
       </div>
-      <h2>svguitar</h2>
-      <p>npm install --save svguitar</p>
-      <div>
-        <h2>db-chords</h2>
-        <div class="p-2">
-          <button
-            @click="() => (chords = [])"
-            class="p-2 bg-white text-black rounded mr-2 cursor-pointer"
-          >
-            CLEAR
-          </button>
-          <button
-            v-for="note in notes"
-            @click="setNote(note)"
-            class="p-2 bg-white text-black rounded mr-2 cursor-pointer"
-          >
-            {{ note }}
-          </button>
-          <label class="inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              class="sr-only peer"
-              @click="() => (scaleSuffix = !scaleSuffix)"
-            />
-            <div
-              class="relative w-11 h-6 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full after:absolute after:top-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
-            ></div>
-            <span class="ml-2">{{ scaleSuffix ? 'Minor' : 'Major' }}</span>
-          </label>
-        </div>
-        <div v-if="chords && chords.length > 0" class="flex mb-2">
-          <div v-for="chord in chords" class="w-40">
-            <p>{{ chord.key }}</p>
-            <ChordDiagram class="bg-white" :chord="chord" />
-          </div>
-        </div>
-        <PianoKeyboard :chords="chords" class="my-2" />
-      </div>
+    </div>
+
+    <div
+      v-if="chords && chords.length > 0"
+      class="flex flex-col text-center items-center justify-center gap-4"
+    >
+      <GuitarDiagram :chords="chords" />
+      <PianoKeyboard :chords="chords" />
     </div>
   </main>
 </template>

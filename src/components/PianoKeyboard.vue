@@ -64,15 +64,17 @@ function handleChordPlay(name: string) {
 </script>
 
 <template>
-  <div v-if="loading === false" class="flex">
-    <div v-for="chord in chords" class="w-40">
-      <PianoChord
-        :pianoSound="pianoSound"
-        :chord="chord.key + chord.suffix"
-        class="my-2"
-        @chord-play="handleChordPlay"
-      />
+  <div v-show="loading === false" class="flex flex-col text-center items-center justify-center">
+    <div class="playButtons flex">
+      <div v-for="chord in chords" class="w-40">
+        <PianoChord
+          :pianoSound="pianoSound"
+          :chord="chord.key + ' ' + chord.suffix"
+          class="my-2"
+          @chord-play="handleChordPlay"
+        />
+      </div>
     </div>
+    <div id="keyboard"></div>
   </div>
-  <div id="keyboard"></div>
 </template>

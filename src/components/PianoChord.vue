@@ -24,7 +24,7 @@ function playChord(name: string) {
   const chord = Chord.get(name).notes
 
   // pick octave 4 and simplify
-  const notes = chord.map((pc) => Note.simplify(pc + '4'))
+  const notes = chord.map((note) => Note.simplify(note) + '4')
 
   highlightNotes(notes, true)
 
