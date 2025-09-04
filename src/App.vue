@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { Shape, SVGuitarChord, type Finger } from 'svguitar'
-import { Chord, Interval, Note, Scale } from 'tonal'
-import { capitalize, onMounted, ref, useTemplateRef, type Ref } from 'vue'
+import { Note, Scale } from 'tonal'
+import { capitalize, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import guitarChords from '@/assets/guitarChords.json'
 import type { IChord } from './assets/guitarChordsInterface'
 import PianoKeyboard from './components/PianoKeyboard.vue'
-import GuitarChord from './components/GuitarChord.vue'
 import GuitarDiagram from './components/GuitarDiagram.vue'
+import ToggleCheckbox from './components/ToggleCheckbox.vue'
+
+const guitarChordsToggle = ref(false)
 
 // TONAL
-
 const chordNotes = ref<null | string[]>(null)
 
 const scaleSuffixToggle = ref(false)
@@ -84,36 +84,18 @@ const minorProgression = (scaleNotes: string[]) => {
   const randomChord2 = scaleChords[Math.floor(Math.random() * scaleChords.length)]
   const randomChord3 = scaleChords[Math.floor(Math.random() * scaleChords.length)]
 
-  // const progression = [randomStart]
-  // progression.push(pickChord(progression, scaleNotes))
-  // progression.push(pickChord(progression, scaleNotes))
-  // progression.push(pickChord(progression, scaleNotes))
   const progression = [randomStart, randomChord1, randomChord2, randomChord3]
 
   progression.forEach((cp, index) => {
     const chordQuantity = progression.filter((c) => c == cp).length
-    console.log(cp + ' ' + chordQuantity)
     if (chordQuantity > 2) {
       const scaleChordsReduced = scaleChords.filter((c) => c != cp)
-      console.log(scaleChordsReduced)
       const rc = scaleChordsReduced[Math.floor(Math.random() * scaleChords.length)]
       progression[index] = rc
     }
   })
 
   return progression
-}
-
-// check dont repeat more than 2 times
-const pickChord = (progression: string[], scaleChords: string[]) => {
-  const MAX_TRIES = 20
-  let chord = ''
-  let tries = 0
-  do {
-    chord = scaleChords[Math.floor(Math.random() * scaleChords.length)]
-    tries++
-  } while (progression.filter((c) => c === chord).length >= 2 && tries < MAX_TRIES)
-  return chord
 }
 
 const notesToChords = (notes: string[]) => {
@@ -141,36 +123,33 @@ const notesToChords = (notes: string[]) => {
 </script>
 
 <template>
-  <main class="w-full flex flex-col text-center items-center">
+  <main class="w-full flex flex-col items-center bg-gray-950 p-10 h-full">
     <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1>
-    <div class="border p-2">
-      <h2 class="mb-2">Select a scale:</h2>
-      <div class="buttons flex w-180 justify-between">
-        <button @click="() => (chords = [])">CLEAR</button>
-        <button v-for="note in notes" @click="setNote(note)">
-          {{ note }}
-        </button>
-        <label class="inline-flex items-center cursor-pointer">
-          <input
-            type="checkbox"
-            class="sr-only peer"
-            v-model="scaleSuffixToggle"
-            @click="() => (scaleSuffixToggle ? (scaleSuffix = 'major') : (scaleSuffix = 'minor'))"
-          />
-          <div
-            class="relative w-11 h-6 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
-          ></div>
-          <span class="ml-2">{{ capitalize(scaleSuffix) }}</span>
-        </label>
+    <div class="flex flex-col gap-5">
+      <div class="options border p-2">
+        <ToggleCheckbox label="Guitar Chords" @click="(toggle) => (guitarChordsToggle = toggle)" />
       </div>
-    </div>
+      <div class="border p-2">
+        <h2 class="mb-2">Select a scale:</h2>
+        <div class="buttons flex w-180 justify-between">
+          <button @click="() => (chords = [])">CLEAR</button>
+          <button v-for="note in notes" @click="setNote(note)">
+            {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
+          </button>
+          <ToggleCheckbox
+            :label="capitalize(scaleSuffix)"
+            @click="(toggle) => (toggle ? (scaleSuffix = 'minor') : (scaleSuffix = 'major'))"
+          />
+        </div>
+      </div>
 
-    <div
-      v-if="chords && chords.length > 0"
-      class="flex flex-col text-center items-center justify-center gap-4"
-    >
-      <GuitarDiagram :chords="chords" />
-      <PianoKeyboard :chords="chords" />
+      <div
+        v-if="chords && chords.length > 0"
+        class="flex flex-col text-center items-center justify-center gap-4"
+      >
+        <PianoKeyboard :chords="chords" />
+        <GuitarDiagram v-if="guitarChordsToggle" :chords="chords" />
+      </div>
     </div>
   </main>
 </template>

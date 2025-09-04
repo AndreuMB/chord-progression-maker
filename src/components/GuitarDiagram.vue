@@ -10,7 +10,6 @@ defineProps<{
 <template>
   <div class="flex">
     <div v-for="chord in chords" class="w-40">
-      <p>{{ chord.key }}</p>
       <GuitarChord class="bg-white h-50" :chord="chord" />
     </div>
   </div>

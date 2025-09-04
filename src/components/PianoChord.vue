@@ -2,10 +2,12 @@
 import { Chord, Note } from 'tonal'
 import * as Tone from 'tone'
 import { Piano } from '@tonejs/piano/build/piano/Piano'
+import { onBeforeUnmount, onMounted } from 'vue'
 
 const props = defineProps<{
   pianoSound: Piano
   chord: string
+  keyBinding: string
 }>()
 
 const emit = defineEmits(['chordPlay'])
@@ -28,14 +30,32 @@ function playChord(name: string) {
 
   highlightNotes(notes, true)
 
-  const now = Tone.now()
+  // play sound
   notes.forEach((n) => props.pianoSound.keyDown({ note: n }))
 
+  // stop sound
+  const now = Tone.now()
   // props.pianoSound.stopAll() // release all at once
   notes.forEach((n) => props.pianoSound.keyUp({ note: n, time: now + 1 }))
 }
+
+// handle keyboard presses
+function handleKeydown(e: KeyboardEvent) {
+  if (e.repeat) return
+  if (e.key === props.keyBinding) {
+    playChord(props.chord)
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
-  <button @click="playChord(props.chord)">Play {{ props.chord }}</button>
+  <button @click="playChord(chord)">Play {{ chord }}</button>
 </template>

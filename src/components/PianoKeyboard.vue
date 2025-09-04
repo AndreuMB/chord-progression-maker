@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import type { QwertyOptions } from '@/types/qwerty-hancock'
-import { Chord, Note } from 'tonal'
-import * as Tone from 'tone'
 import { Piano } from '@tonejs/piano/build/piano/Piano'
 import type { IChord } from '@/assets/guitarChordsInterface'
 import PianoChord from './PianoChord.vue'
@@ -20,23 +18,29 @@ pianoSound.toDestination()
 
 const loading = ref(true)
 
-let keyboard: QwertyHancock | null = null
-const options: QwertyOptions = {
-  id: 'keyboard',
-  width: 250,
-  height: 150,
-  octaves: 1,
-  startNote: 'C4',
-  whiteNotesColour: 'white',
-  blackNotesColour: 'black',
-  hoverColour: '#f3e939',
-}
-
 const keys = ref<ChildNode | null>(null)
 
 onMounted(async () => {
   await pianoSound.load()
-  keyboard = new QwertyHancock(options)
+
+  const options: QwertyOptions = {
+    id: 'keyboard',
+    width: 500,
+    height: 150,
+    octaves: 2,
+    startNote: 'C4',
+    whiteNotesColour: 'white',
+    blackNotesColour: 'black',
+    hoverColour: '#f3e939',
+  }
+  const keyboard = new QwertyHancock(options)
+
+  keyboard.keyDown = (note) => {
+    pianoSound.keyDown({ note })
+  }
+  keyboard.keyUp = (note) => {
+    pianoSound.keyUp({ note })
+  }
 
   const keyboardEl = document.getElementById('keyboard')
   if (!keyboardEl) return
@@ -64,13 +68,16 @@ function handleChordPlay(name: string) {
 </script>
 
 <template>
-  <div v-show="loading === false" class="flex flex-col text-center items-center justify-center">
+  <div
+    v-show="loading === false"
+    class="flex flex-col gap-4 text-center items-center justify-center"
+  >
     <div class="playButtons flex">
-      <div v-for="chord in chords" class="w-40">
+      <div v-for="(chord, index) in chords" class="w-40">
         <PianoChord
           :pianoSound="pianoSound"
           :chord="chord.key + ' ' + chord.suffix"
-          class="my-2"
+          :keyBinding="index + 1 + ''"
           @chord-play="handleChordPlay"
         />
       </div>
