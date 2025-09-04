@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Note, Scale } from 'tonal'
-import { capitalize, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { capitalize, ref, type Ref } from 'vue'
 import guitarChords from '@/assets/guitarChords.json'
 import type { IChord } from './assets/guitarChordsInterface'
 import PianoKeyboard from './components/PianoKeyboard.vue'
@@ -22,6 +22,7 @@ const enharmonics: Record<string, string> = {
   'G#': 'Ab',
   'D#': 'Eb',
   'A#': 'Bb',
+  Db: 'C#',
 }
 
 const chords: Ref<IChord[]> = ref([])
@@ -31,13 +32,11 @@ const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 const scaleSuffix = ref<string>('major')
 
 const setNote = (note: string) => {
-  // chords.value = []
   const scale = Scale.get(note + ' ' + scaleSuffix.value)
   const scaleNotes = scale.notes
 
-  const progression = scaleSuffixToggle.value
-    ? minorProgression(scaleNotes)
-    : majorProgression(scaleNotes)
+  const progression =
+    scaleSuffix.value === 'minor' ? minorProgression(scaleNotes) : majorProgression(scaleNotes)
 
   chordNotes.value = progression
 
