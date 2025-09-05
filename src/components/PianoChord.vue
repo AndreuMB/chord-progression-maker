@@ -2,7 +2,8 @@
 import { Chord, Note } from 'tonal'
 import * as Tone from 'tone'
 import { Piano } from '@tonejs/piano/build/piano/Piano'
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import KeyButton from './KeyButton.vue'
 
 const props = defineProps<{
   pianoSound: Piano
@@ -35,15 +36,17 @@ function playChord(name: string) {
 
   // stop sound
   const now = Tone.now()
-  // props.pianoSound.stopAll() // release all at once
   notes.forEach((n) => props.pianoSound.keyUp({ note: n, time: now + 1 }))
 }
+
+const buttonRef = ref<{ trigger: () => void } | null>(null)
 
 // handle keyboard presses
 function handleKeydown(e: KeyboardEvent) {
   if (e.repeat) return
-  if (e.key === props.keyBinding) {
-    playChord(props.chord)
+  if (e.key === props.keyBinding && buttonRef.value) {
+    // needed for the animation to work
+    buttonRef.value.trigger()
   }
 }
 
@@ -57,5 +60,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <button @click="playChord(chord)">Play {{ chord }}</button>
+  <KeyButton ref="buttonRef" @click="playChord(chord)">Play {{ chord }}</KeyButton>
 </template>
