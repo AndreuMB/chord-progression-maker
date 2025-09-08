@@ -29,6 +29,7 @@ button {
   --button_color: #000000;
   --button_outline_color: #e8e8e8;
   padding: 0;
+  width: 150px;
   font-size: 17px;
   font-weight: bold;
   border: none;

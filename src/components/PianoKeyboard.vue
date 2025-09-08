@@ -5,8 +5,10 @@ import { Piano } from '@tonejs/piano/build/piano/Piano'
 import type { IChord } from '@/assets/guitarChordsInterface'
 import PianoChord from './PianoChord.vue'
 
-const props = defineProps<{
+defineProps<{
   chords: IChord[]
+  fullChords: IChord[]
+  fullChordsToggle: boolean
 }>()
 
 const pianoSound = new Piano({
@@ -72,14 +74,25 @@ function handleChordPlay(name: string) {
     v-show="loading === false"
     class="flex flex-col gap-4 text-center items-center justify-center"
   >
-    <div class="playButtons flex">
-      <div v-for="(chord, index) in chords" class="w-40">
-        <PianoChord
-          :pianoSound="pianoSound"
-          :chord="chord.key + ' ' + chord.suffix"
-          :keyBinding="index + 1 + ''"
-          @chord-play="handleChordPlay"
-        />
+    <div class="playButtons flex flex-col gap-10 items-center">
+      <div v-if="fullChordsToggle" class="playButtons flex flex-wrap justify-center gap-2">
+        <div v-for="(chord, index) in fullChords">
+          <PianoChord
+            :pianoSound="pianoSound"
+            :chord="chord.key + ' ' + chord.suffix"
+            @chord-play="handleChordPlay"
+          />
+        </div>
+      </div>
+      <div class="playButtons flex flex-wrap justify-center gap-2">
+        <div v-for="(chord, index) in chords">
+          <PianoChord
+            :pianoSound="pianoSound"
+            :chord="chord.key + ' ' + chord.suffix"
+            :keyBinding="index + 1 + ''"
+            @chord-play="handleChordPlay"
+          />
+        </div>
       </div>
     </div>
     <div id="keyboard"></div>

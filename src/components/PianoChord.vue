@@ -8,7 +8,7 @@ import KeyButton from './KeyButton.vue'
 const props = defineProps<{
   pianoSound: Piano
   chord: string
-  keyBinding: string
+  keyBinding?: string
 }>()
 
 const emit = defineEmits(['chordPlay'])
