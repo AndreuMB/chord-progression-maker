@@ -10,15 +10,15 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div v-if="fullChordsToggle" class="flex justify-center">
-      <div v-for="chord in fullChords" class="w-40">
-        <GuitarChord class="bg-white h-50" :chord="chord" />
+  <div class="flex flex-col gap-4 w-full">
+    <div v-if="fullChordsToggle" class="flex min-h-20 bg-white justify-center p-2">
+      <div v-for="chord in fullChords" class="w-1/6 flex flex-col justify-center h-full">
+        <GuitarChord :chord="chord" />
       </div>
     </div>
-    <div class="flex justify-center">
-      <div v-for="chord in chords" class="w-40">
-        <GuitarChord class="bg-white h-50" :chord="chord" />
+    <div class="flex min-h-20 bg-white justify-center p-2">
+      <div v-for="chord in chords" class="min-w-1/6 flex flex-col justify-center h-full">
+        <GuitarChord :chord="chord" />
       </div>
     </div>
   </div>
