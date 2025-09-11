@@ -83,4 +83,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   justify-items: center;
+  overflow: hidden;
 }

@@ -17,6 +17,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "@tonejs/piano": "^0.2.1",
+    "primeicons": "^7.0.0",
     "svguitar": "^2.4.1",
     "tailwindcss": "^4.1.12",
     "tonal": "^6.4.2",
