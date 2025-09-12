@@ -70,21 +70,10 @@ function handleChordPlay(name: string) {
 </script>
 
 <template>
-  <div
-    v-show="loading === false"
-    class="flex flex-col gap-4 text-center items-center justify-center"
-  >
-    <div class="playButtons flex flex-col gap-10 items-center">
-      <div v-if="fullChordsToggle" class="playButtons flex flex-wrap justify-center gap-2">
-        <div v-for="(chord, index) in fullChords">
-          <PianoChord
-            :pianoSound="pianoSound"
-            :chord="chord.key + ' ' + chord.suffix"
-            @chord-play="handleChordPlay"
-          />
-        </div>
-      </div>
-      <div class="playButtons flex flex-wrap justify-center gap-2">
+  <div v-show="loading === false" class="flex gap-20 text-center items-center justify-center">
+    <!-- chord progression and piano -->
+    <div class="flex flex-col gap-4 items-center">
+      <div class="playButtons flex flex-wrap gap-2">
         <div v-for="(chord, index) in chords">
           <PianoChord
             :pianoSound="pianoSound"
@@ -94,8 +83,18 @@ function handleChordPlay(name: string) {
           />
         </div>
       </div>
+      <div id="keyboard"></div>
     </div>
-    <div id="keyboard"></div>
+    <!-- full chords -->
+    <div v-if="fullChordsToggle" class="playButtons flex flex-col justify-center gap-2">
+      <div v-for="(chord, index) in fullChords">
+        <PianoChord
+          :pianoSound="pianoSound"
+          :chord="chord.key + ' ' + chord.suffix"
+          @chord-play="handleChordPlay"
+        />
+      </div>
+    </div>
   </div>
   <div v-if="loading !== false">
     <div role="status">

@@ -16,7 +16,7 @@ defineProps<{
         <GuitarChord :chord="chord" />
       </div>
     </div>
-    <div class="flex min-h-20 bg-white justify-center p-2">
+    <div v-else class="flex min-h-20 bg-white justify-center p-2">
       <div v-for="chord in chords" class="min-w-1/6 flex flex-col justify-center h-full">
         <GuitarChord :chord="chord" />
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute bottom-0 right-0">
+  <div class="absolute -bottom-10 -right-10">
     <div class="absolute-center">
       <svg class="circle-svg absolute top-0 left-0" viewBox="0 0 500 500">
         <defs>
@@ -49,11 +49,12 @@
 
 .play-btn {
   font-size: 6rem;
-  padding: 100px;
+  padding: 60px;
   z-index: 10;
   border-radius: 50%;
   transition: background-color 1s ease-in-out;
   animation: pulsePlay 2s infinite;
+  cursor: pointer;
 }
 
 .play-btn:hover {
@@ -65,15 +66,18 @@
 @keyframes pulse {
   0% {
     transform: scale(1);
-    background-color: rgba(128, 128, 128, 0.4);
+    padding: 60px;
+    background-color: rgba(128, 128, 128, 0.2);
   }
   50% {
     transform: scale(1.08);
-    background-color: gray;
+    padding: 70px;
+    background-color: rgba(128, 128, 128, 0.4);
   }
   100% {
     transform: scale(1);
-    background-color: rgba(128, 128, 128, 0.4);
+    padding: 60px;
+    background-color: rgba(128, 128, 128, 0.2);
   }
 }
 

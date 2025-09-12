@@ -7,6 +7,7 @@ tone(play piano)
 Qwerty Hancock(piano)
 svguitar(guitar diagrams)
 db-chords(guitar chords)
+icons (https://primevue.org/icons)
 
 ## Recommended IDE Setup
 

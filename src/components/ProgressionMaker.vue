@@ -200,19 +200,21 @@ const chordsToIChords = (notes: scaleChords) => {
 <template>
   <main class="h-dvh w-dvw flex flex-col items-center justify-center bg-gray-950 p-10">
     <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1>
-    <div class="flex gap-5 items-center p-10 justify-center h-full w-full">
-      <div class="flex gap-2 w-1/2">
+    <div class="flex flex-col gap-20 items-center p-10 justify-center h-full w-full">
+      <!-- scale selector -->
+      <div class="flex gap-2">
         <div class="flex flex-col gap-2 border p-2 justify-center">
-          <h2>Select a scale:</h2>
           <div class="buttons flex justify-between gap-1">
-            <button @click="() => (chords = [])">CLEAR</button>
+            <button class="bg-red-300!" @click="() => (chords = [])">
+              <i class="pi pi-eraser"></i>
+            </button>
             <button v-for="note in notes" @click="setNote(note)">
               {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
             </button>
             <div class="flex flex-col">
               <select class="p-2 text-black bg-white rounded" v-model="scaleSuffix">
-                <option value="major" selected>Major</option>
-                <option value="minor">minor</option>
+                <option value="major" selected>M</option>
+                <option value="minor">m</option>
               </select>
             </div>
           </div>
@@ -226,9 +228,10 @@ const chordsToIChords = (notes: scaleChords) => {
         </div>
       </div>
 
+      <!-- keyboard and guitar -->
       <div
         v-if="chords && chords.length > 0"
-        class="flex flex-col text-center items-center justify-center gap-4"
+        class="flex flex-col text-center items-center justify-center gap-10"
       >
         <PianoKeyboard
           :chords="chords"
