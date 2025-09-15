@@ -193,8 +193,8 @@ const chordsToIChords = (notes: scaleChords) => {
 
 <template>
   <main class="h-dvh w-dvw flex flex-col items-center bg-secondary p-10">
+    <!-- absolute right-0 rotate-270 -->
     <div>
-      <!-- <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1> -->
       <!-- options -->
       <div class="flex gap-2">
         <!-- scales -->
@@ -250,5 +250,3 @@ const chordsToIChords = (notes: scaleChords) => {
     </div>
   </main>
 </template>
-
-<style scoped></style>

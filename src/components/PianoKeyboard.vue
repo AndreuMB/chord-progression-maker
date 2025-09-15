@@ -4,6 +4,7 @@ import type { QwertyOptions } from '@/types/qwerty-hancock'
 import { Piano } from '@tonejs/piano/build/piano/Piano'
 import type { IChord } from '@/assets/guitarChordsInterface'
 import PianoChord from './PianoChord.vue'
+import * as Tone from 'tone'
 
 defineProps<{
   chords: IChord[]
@@ -11,12 +12,14 @@ defineProps<{
   fullChordsToggle: boolean
 }>()
 
-const pianoSound = new Piano({
-  velocities: 5,
-})
+const volume = ref<number>(50)
+
+const pianoSound = new Piano()
+
+const volumeNode = new Tone.Volume(volume.value / 10).toDestination()
 
 // connect it to the speaker output
-pianoSound.toDestination()
+pianoSound.connect(volumeNode)
 
 const loading = ref(true)
 
@@ -68,9 +71,27 @@ function handleChordPlay(name: string) {
   const duration = 1.5
   timeout = setTimeout(() => cleanKeyboard(), duration * 1000)
 }
+
+const handleChangeVolume = () => {
+  const gain = volume.value / 100
+  pianoSound.strings.value = volume.value / 10
+  volumeNode.volume.value = Tone.gainToDb(gain)
+}
 </script>
 
 <template>
+  <div class="w-10 flex justify-between gap-4 absolute top-2 left-2 p-2">
+    <i class="pi pi-volume-up"></i>
+    <input
+      type="range"
+      min="1"
+      max="100"
+      value="50"
+      class="slider"
+      v-model="volume"
+      @change="handleChangeVolume"
+    />
+  </div>
   <div v-show="loading === false" class="flex gap-12 text-center items-center justify-center">
     <!-- chord progression and piano -->
     <div class="flex flex-col gap-10 items-center">
