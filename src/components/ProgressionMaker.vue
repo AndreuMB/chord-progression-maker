@@ -64,13 +64,6 @@ interface scaleChords {
 }
 
 const majorScaleChords = (scaleNotes: string[]): scaleChords => {
-  // const CHORD_I = scaleNotes[0] + ' major'
-  // const CHORD_II = scaleNotes[1] + ' minor'
-  // const CHORD_III = scaleNotes[2] + ' minor'
-  // const CHORD_IV = scaleNotes[3] + ' major'
-  // const CHORD_V = scaleNotes[4] + ' major'
-  // const CHORD_VI = scaleNotes[5] + ' minor'
-
   const scaleChords: scaleChords = {
     chordI: scaleNotes[0] + ' major',
     chordII: scaleNotes[1] + ' minor',
@@ -88,6 +81,7 @@ const majorScaleChords = (scaleNotes: string[]): scaleChords => {
 const majorProgression = (scaleChords: scaleChords) => {
   // final chord
   const finalChords = [scaleChords.chordIV, scaleChords.chordV]
+
   const randomF = finalChords[Math.floor(Math.random() * finalChords.length)]
 
   // middle chords
@@ -120,7 +114,7 @@ const minorProgression = (scaleNotes: scaleChords) => {
   const startChords = [scaleNotes.chordI, scaleNotes.chordVI]
   const randomStart = startChords[Math.floor(Math.random() * startChords.length)]
 
-  // final chord
+  // left chords
   const CHORD_V = scaleNotes.chordV.split(' ')[0] + ' major' // not in scale but can fit well and make tension
   const scaleChords = startChords.concat([
     scaleNotes.chordIII,
@@ -198,12 +192,13 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex flex-col items-center justify-center bg-gray-950 p-10">
-    <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1>
-    <div class="flex flex-col gap-20 items-center p-10 justify-center h-full w-full">
-      <!-- scale selector -->
+  <main class="h-dvh w-dvw flex flex-col items-center bg-gray-950 p-10">
+    <div>
+      <!-- <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1> -->
+      <!-- options -->
       <div class="flex gap-2">
-        <div class="flex flex-col gap-2 border p-2 justify-center">
+        <!-- scales -->
+        <div class="flex flex-col gap-2 border p-2 justify-center rounded">
           <div class="buttons flex justify-between gap-1">
             <button class="bg-red-300!" @click="() => (chords = [])">
               <i class="pi pi-eraser"></i>
@@ -211,15 +206,14 @@ const chordsToIChords = (notes: scaleChords) => {
             <button v-for="note in notes" @click="setNote(note)">
               {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
             </button>
-            <div class="flex flex-col">
-              <select class="p-2 text-black bg-white rounded" v-model="scaleSuffix">
-                <option value="major" selected>M</option>
-                <option value="minor">m</option>
-              </select>
-            </div>
+            <select class="text-black bg-white rounded px-1 font-bold!" v-model="scaleSuffix">
+              <option value="major" selected>M</option>
+              <option value="minor">m</option>
+            </select>
           </div>
         </div>
-        <div class="flex flex-col gap-2 border p-2 justify-center">
+        <!-- toggles -->
+        <div class="flex flex-col gap-2 border p-2 justify-center rounded">
           <ToggleCheckbox
             label="Guitar Chords"
             @click="(toggle) => (guitarChordsToggle = toggle)"
@@ -227,11 +221,13 @@ const chordsToIChords = (notes: scaleChords) => {
           <ToggleCheckbox label="Full Chords" @click="(toggle) => (fullChordsToggle = toggle)" />
         </div>
       </div>
+    </div>
 
-      <!-- keyboard and guitar -->
+    <!-- keyboard and guitar -->
+    <div class="flex flex-col justify-center h-full">
       <div
         v-if="chords && chords.length > 0"
-        class="flex flex-col text-center items-center justify-center gap-10"
+        class="flex flex-col text-center items-center justify-center gap-10 border p-10 rounded"
       >
         <PianoKeyboard
           :chords="chords"
@@ -244,6 +240,12 @@ const chordsToIChords = (notes: scaleChords) => {
           :fullChords="fullChords"
           :fullChordsToggle="fullChordsToggle"
         />
+      </div>
+      <div
+        v-else
+        class="flex flex-col text-center items-center justify-center gap-10 border p-10 rounded text-2xl"
+      >
+        <p class="animate-pulse">SELECT A SCALE TO START</p>
       </div>
     </div>
   </main>

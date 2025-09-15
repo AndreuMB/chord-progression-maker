@@ -27,8 +27,8 @@ onMounted(async () => {
 
   const options: QwertyOptions = {
     id: 'keyboard',
-    width: 500,
-    height: 150,
+    width: 1000,
+    height: 300,
     octaves: 2,
     startNote: 'C4',
     whiteNotesColour: 'white',
@@ -70,10 +70,10 @@ function handleChordPlay(name: string) {
 </script>
 
 <template>
-  <div v-show="loading === false" class="flex gap-20 text-center items-center justify-center">
+  <div v-show="loading === false" class="flex gap-12 text-center items-center justify-center">
     <!-- chord progression and piano -->
-    <div class="flex flex-col gap-4 items-center">
-      <div class="playButtons flex flex-wrap gap-2">
+    <div class="flex flex-col gap-10 items-center">
+      <div class="playButtons flex flex-wrap justify-around w-full">
         <div v-for="(chord, index) in chords">
           <PianoChord
             :pianoSound="pianoSound"
@@ -85,9 +85,10 @@ function handleChordPlay(name: string) {
       </div>
       <div id="keyboard"></div>
     </div>
+    <div v-if="fullChordsToggle" class="border-2 rounded h-full"></div>
     <!-- full chords -->
-    <div v-if="fullChordsToggle" class="playButtons flex flex-col justify-center gap-2">
-      <div v-for="(chord, index) in fullChords">
+    <div v-if="fullChordsToggle" class="playButtons flex flex-col justify-between h-full">
+      <div v-for="chord in fullChords">
         <PianoChord
           :pianoSound="pianoSound"
           :chord="chord.key + ' ' + chord.suffix"
