@@ -9,7 +9,6 @@ const progressionMaker = ref<HTMLDivElement>()
 
 <template>
   <div class="scroll-smooth h-dvh w-dvw">
-    <!-- <div class="bg-gray-900"> -->
     <Welcome class="" v-if="progressionMaker" :scrollTo="progressionMaker" />
     <div ref="progressionMaker" class="relative">
       <InfoButton class="absolute top-2 right-2" />

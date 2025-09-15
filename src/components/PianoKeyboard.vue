@@ -25,15 +25,16 @@ const keys = ref<ChildNode | null>(null)
 onMounted(async () => {
   await pianoSound.load()
 
+  const computedStyle = window.getComputedStyle(document.body)
   const options: QwertyOptions = {
     id: 'keyboard',
     width: 1000,
     height: 300,
     octaves: 2,
     startNote: 'C4',
-    whiteNotesColour: 'white',
-    blackNotesColour: 'black',
-    hoverColour: '#f3e939',
+    whiteKeyColour: 'white',
+    blackKeyColour: 'black',
+    activeColour: computedStyle.getPropertyValue('--primary'),
   }
   const keyboard = new QwertyHancock(options)
 
@@ -101,7 +102,7 @@ function handleChordPlay(name: string) {
     <div role="status">
       <svg
         aria-hidden="true"
-        class="w-8 h-8 text-gray-200 animate-spin fill-blue-600"
+        class="w-8 h-8 text-secondary animate-spin fill-primary"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

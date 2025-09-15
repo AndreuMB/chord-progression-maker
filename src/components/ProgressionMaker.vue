@@ -192,7 +192,7 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex flex-col items-center bg-gray-950 p-10">
+  <main class="h-dvh w-dvw flex flex-col items-center bg-secondary p-10">
     <div>
       <!-- <h1 class="text-4xl mb-10">CHORD PROGESSION MAKER</h1> -->
       <!-- options -->
@@ -200,13 +200,13 @@ const chordsToIChords = (notes: scaleChords) => {
         <!-- scales -->
         <div class="flex flex-col gap-2 border p-2 justify-center rounded">
           <div class="buttons flex justify-between gap-1">
-            <button class="bg-red-300!" @click="() => (chords = [])">
+            <button class="bg-terciary!" @click="() => (chords = [])">
               <i class="pi pi-eraser"></i>
             </button>
             <button v-for="note in notes" @click="setNote(note)">
               {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
             </button>
-            <select class="text-black bg-white rounded px-1 font-bold!" v-model="scaleSuffix">
+            <select class="text-secondary bg-primary rounded px-1 font-bold!" v-model="scaleSuffix">
               <option value="major" selected>M</option>
               <option value="minor">m</option>
             </select>

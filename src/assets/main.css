@@ -2,53 +2,41 @@
 @import 'tailwindcss';
 @import 'primeicons/primeicons.css';
 
+:root {
+  /* light theme maybe */
+  /* --primary: #90f1ef;
+  --secondary: #ff7497;
+  --terciary: #ffef9f; */
+
+  /* dark theme */
+  --primary: #ffffff;
+  --secondary: #2d3142;
+  --terciary: #bfc0c0;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-terciary: var(--terciary);
+}
+
 #app {
-  /* max-width: 1280px; */
-  /* padding: 2rem; */
   font-weight: normal;
-  /* height: 100vh; */
 }
 
 button {
   padding: 4px 10px 4px 10px;
-  border: 1px solid black;
+  border: 1px solid var(--secondary);
   cursor: pointer;
-  background-color: white;
-  color: black;
+  background-color: var(--primary);
+  color: var(--secondary);
   border-radius: 4px;
 }
 
 button:hover {
-  background-color: rgb(226, 226, 226);
+  background-color: var(--primary);
 }
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-/* @media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */
 
 #keyboard .active {
-  background-color: rgb(159, 159, 159) !important;
+  background-color: var(--primary) !important;
 }

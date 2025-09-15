@@ -26,8 +26,8 @@ const trigger = () => {
 button {
   /* Variables */
   --button_radius: 0.2em;
-  --button_color: #000000;
-  --button_outline_color: #e8e8e8;
+  --button_color: var(--secondary);
+  --button_outline_color: var(--primary);
   padding: 0;
   width: 150px;
   font-size: 17px;

@@ -4,9 +4,9 @@ export interface QwertyOptions {
   height: number
   octaves?: number
   startNote?: string
-  whiteNotesColour?: string
-  blackNotesColour?: string
-  hoverColour?: string
+  whiteKeyColour?: string
+  blackKeyColour?: string
+  activeColour?: string
 }
 
 declare global {

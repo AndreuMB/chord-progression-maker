@@ -35,7 +35,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 10px;
-  fill: #333;
+  fill: var(--primary);
 }
 
 .absolute-center {
@@ -58,7 +58,7 @@
 }
 
 .play-btn:hover {
-  background-color: gray;
+  background-color: var(--terciary);
   animation: pulse 2s infinite;
 }
 
@@ -67,17 +67,17 @@
   0% {
     transform: scale(1);
     padding: 60px;
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: color-mix(in srgb, var(--terciary) 20%, transparent);
   }
   50% {
     transform: scale(1.08);
     padding: 70px;
-    background-color: rgba(128, 128, 128, 0.4);
+    background-color: color-mix(in srgb, var(--terciary) 40%, transparent);
   }
   100% {
     transform: scale(1);
     padding: 60px;
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: color-mix(in srgb, var(--terciary) 20%, transparent);
   }
 }
 

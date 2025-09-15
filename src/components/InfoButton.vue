@@ -7,8 +7,12 @@ const showInfoDialog = () => {
   <div>
     <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> -->
-    <button command="show-modal" commandfor="dialog" class="bg-transparent! cursor-default!">
-      <i class="pi pi-info-circle text-gray-300! hover:text-white! cursor-pointer!"></i>
+    <button
+      command="show-modal"
+      commandfor="dialog"
+      class="bg-transparent! cursor-default! border-0!"
+    >
+      <i class="pi pi-info-circle text-primary! hover:text-primary-light! cursor-pointer!"></i>
     </button>
     <el-dialog>
       <dialog
@@ -22,17 +26,15 @@ const showInfoDialog = () => {
 
         <div
           tabindex="0"
-          class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0"
+          class="flex min-h-full text-primary items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0"
         >
-          <el-dialog-panel
-            class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
-          >
-            <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <el-dialog-panel class="relative rounded outline -outline-offset-1 max-w-lg">
+            <div class="bg-secondary p-5">
               <div class="flex gap-2 items-center">
-                <i class="pi pi-info-circle text-gray-300!"></i>
-                <h3 class="text-base font-semibold text-white">How it is done?</h3>
+                <i class="pi pi-info-circle"></i>
+                <h3 class="text-base font-semibold">How it is done?</h3>
               </div>
-              <div class="mt-2 ml-2 text-left text-sm text-gray-400 flex flex-col gap-2">
+              <div class="mt-2 ml-2 text-left text-sm flex flex-col gap-2">
                 <div>
                   When you select an scale it gets the seven notes from it and make the chords. With
                   this chords it makes a 4 chord progression. <br />After this depend if you
@@ -71,7 +73,7 @@ const showInfoDialog = () => {
               commandfor="dialog"
               class="bg-transparent! cursor-default! border-0! absolute top-2 right-2"
             >
-              <i class="pi pi-times text-gray-300! hover:text-white! cursor-pointer!"></i>
+              <i class="pi pi-times text-primary hover:text-primary-light cursor-pointer!"></i>
             </button>
           </el-dialog-panel>
         </div>
