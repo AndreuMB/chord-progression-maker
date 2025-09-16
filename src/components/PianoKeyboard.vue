@@ -29,15 +29,24 @@ onMounted(async () => {
   await pianoSound.load()
 
   const computedStyle = window.getComputedStyle(document.body)
+
+  const MAX_WIDTH = 1200
+  const WIDTH_PIANO = 56
+  const pianoWidth = (document.body.offsetWidth * WIDTH_PIANO) / 100
+
+  const MAX_HEIGHT = 380
+  const HEIGHT_PIANO = 36
+  const pianoHeight = (document.body.offsetHeight * HEIGHT_PIANO) / 100
+
   const options: QwertyOptions = {
     id: 'keyboard',
-    width: 1000,
-    height: 300,
+    width: pianoWidth > MAX_WIDTH ? MAX_WIDTH : pianoWidth,
+    height: pianoHeight > MAX_HEIGHT ? MAX_HEIGHT : pianoHeight,
     octaves: 2,
     startNote: 'C4',
     whiteKeyColour: 'white',
     blackKeyColour: 'black',
-    activeColour: computedStyle.getPropertyValue('--primary'),
+    activeColour: computedStyle.getPropertyValue('--terciary'),
   }
   const keyboard = new QwertyHancock(options)
 

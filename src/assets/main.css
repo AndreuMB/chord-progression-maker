@@ -14,6 +14,16 @@
   --terciary: #bfc0c0;
 }
 
+@font-face {
+  font-family: bitCount;
+  src: url(BitcountGridDouble.ttf);
+}
+
+@font-face {
+  font-family: libertinusKeyboard;
+  src: url(LibertinusKeyboard.ttf);
+}
+
 @theme {
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
@@ -22,6 +32,15 @@
 
 #app {
   font-weight: normal;
+  font-family: bitCount;
+}
+
+h1 {
+  font-family: libertinusKeyboard;
+}
+
+.buttons {
+  font-family: fantasy;
 }
 
 button {
@@ -38,5 +57,5 @@ button:hover {
 }
 
 #keyboard .active {
-  background-color: var(--primary) !important;
+  background-color: var(--terciary) !important;
 }

@@ -192,39 +192,33 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex flex-col items-center bg-secondary p-10">
-    <!-- absolute right-0 rotate-270 -->
-    <div>
-      <!-- options -->
-      <div class="flex gap-2">
-        <!-- scales -->
-        <div class="flex flex-col gap-2 border p-2 justify-center rounded">
-          <div class="buttons flex justify-between gap-1">
-            <button class="bg-terciary!" @click="() => (chords = [])">
-              <i class="pi pi-eraser"></i>
-            </button>
-            <button v-for="note in notes" @click="setNote(note)">
-              {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
-            </button>
-            <select class="text-secondary bg-primary rounded px-1 font-bold!" v-model="scaleSuffix">
-              <option value="major" selected>M</option>
-              <option value="minor">m</option>
-            </select>
-          </div>
+  <main class="h-dvh w-dvw flex items-center bg-secondary p-10">
+    <!-- options -->
+    <div class="flex flex-col gap-2">
+      <!-- scales -->
+      <div class="flex flex-col gap-2 border p-2 justify-center rounded text-lg">
+        <div class="buttons flex flex-col justify-between gap-1">
+          <button class="bg-terciary!" @click="() => (chords = [])">
+            <i class="pi pi-eraser"></i>
+          </button>
+          <button v-for="note in notes" @click="setNote(note)">
+            {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
+          </button>
+          <select class="text-secondary bg-primary rounded p-1 text-center" v-model="scaleSuffix">
+            <option value="major" selected>M</option>
+            <option value="minor">m</option>
+          </select>
         </div>
-        <!-- toggles -->
-        <div class="flex flex-col gap-2 border p-2 justify-center rounded">
-          <ToggleCheckbox
-            label="Guitar Chords"
-            @click="(toggle) => (guitarChordsToggle = toggle)"
-          />
-          <ToggleCheckbox label="Full Chords" @click="(toggle) => (fullChordsToggle = toggle)" />
-        </div>
+      </div>
+      <!-- toggles -->
+      <div class="flex flex-col gap-2 border p-2 justify-center rounded">
+        <ToggleCheckbox label="Guitar Chords" @click="(toggle) => (guitarChordsToggle = toggle)" />
+        <ToggleCheckbox label="Full Chords" @click="(toggle) => (fullChordsToggle = toggle)" />
       </div>
     </div>
 
     <!-- keyboard and guitar -->
-    <div class="flex flex-col justify-center h-full">
+    <div class="flex flex-col justify-center h-full m-auto">
       <div
         v-if="chords && chords.length > 0"
         class="flex flex-col text-center items-center justify-center gap-10 border p-10 rounded"

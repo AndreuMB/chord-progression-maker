@@ -12,7 +12,7 @@ const progressionMaker = ref<HTMLDivElement>()
     <Welcome class="" v-if="progressionMaker" :scrollTo="progressionMaker" />
     <div ref="progressionMaker" class="relative">
       <InfoButton class="absolute top-2 right-2" />
-      <h1 class="text-6xl opacity-20 rotateTitle">CHORD PROGESSION MAKER</h1>
+      <h2 class="text-6xl opacity-20 rotateTitle">CHORD PROGESSION MAKER</h2>
       <ProgressionMaker />
     </div>
   </div>
