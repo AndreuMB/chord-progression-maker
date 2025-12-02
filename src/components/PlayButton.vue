@@ -1,7 +1,9 @@
 <template>
-  <div class="absolute -bottom-10 -right-10">
-    <div class="absolute-center">
-      <svg class="circle-svg absolute top-0 left-0" viewBox="0 0 500 500">
+  <div class="absolute bottom-20 right-10 w-70 h-70">
+    <!-- absolute-center -->
+    <div class="w-full h-full">
+      <!-- absolute top-0 left-0 w-50 h-50 -->
+      <svg class="circle-svg" viewBox="0 0 500 500">
         <defs>
           <path
             d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250"
@@ -9,7 +11,7 @@
           />
         </defs>
         <g>
-          <text class="circle-text" dy="70" textLength="1220">
+          <text class="circle-text" dy="0" textLength="1220">
             <textPath xlink:href="#textcircle_top">LETS PLAY LETS PLAY LETS PLAY</textPath>
           </text>
           <animateTransform
@@ -24,7 +26,10 @@
         </g>
       </svg>
 
-      <i class="pi pi-play play-btn"></i>
+      <!-- Change icon -->
+      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center">
+        <i class="pi pi-play play-btn"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -40,30 +45,31 @@
 
 .absolute-center {
   position: relative;
-  width: 700px;
-  height: 700px;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .play-btn {
-  font-size: 6rem;
-  padding: 60px;
+  font-size: 2rem;
+  padding: 4rem;
   z-index: 10;
   border-radius: 50%;
-  transition: background-color 1s ease-in-out;
+  /* transition: background-color 1s ease-in-out; */
   animation: pulsePlay 2s infinite;
   cursor: pointer;
+  /* text-align: center; */
 }
 
 .play-btn:hover {
-  background-color: var(--terciary);
-  animation: pulse 2s infinite;
+  background-color: color-mix(in srgb, var(--terciary) 20%, transparent);
+  /* animation: pulse 2s infinite; */
 }
 
 /* Pulse animation */
-@keyframes pulse {
+/* @keyframes pulse {
   0% {
     transform: scale(1);
     padding: 60px;
@@ -79,7 +85,7 @@
     padding: 60px;
     background-color: color-mix(in srgb, var(--terciary) 20%, transparent);
   }
-}
+} */
 
 @keyframes pulsePlay {
   0% {

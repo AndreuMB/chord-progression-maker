@@ -1,18 +1,42 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import AudioWave from './AudioWave.vue'
 import PlayButton from './PlayButton.vue'
 
 const props = defineProps<{
   scrollTo: HTMLDivElement
 }>()
 
-function scrollTo() {
+const scrollToApp = () => {
+  console.log('scroll yo')
   props.scrollTo.scrollIntoView({ behavior: 'smooth' })
+}
+
+function checkSmallScreenSize() {
+  if (window.innerWidth < 1300) return true
+  return false
 }
 </script>
 <template>
-  <div class="h-full w-[80%] flex flex-col justify-center gap-20 p-10">
-    <h1 class="text-8xl">WELCOME TO CHORD PROGRESSION MAKER</h1>
-    <h2 class="ml-5 text-4xl">Start making your perfect sounds</h2>
-    <PlayButton @click="scrollTo" />
+  <div
+    class="h-full flex flex-col justify-center gap-20 p-10"
+    @wheel="scrollToApp"
+    @touchstart="scrollToApp"
+  >
+    <!-- change title font -->
+    <div>
+      <h2 class="text-2xl md:text-4xl">WELCOME TO</h2>
+      <h1 class="text-4xl md:text-6xl lg:text-8xl text-primary">CHORD PROGRESSION MAKER</h1>
+    </div>
+    <h2 class="text-2xl md:text-4xl">Start making your perfect sounds</h2>
+    <PlayButton v-if="!checkSmallScreenSize()" @click="scrollToApp" />
+    <div
+      v-else
+      class="simple-font text-2xl animate-pulse absolute bottom-5 left-0 text-secondary z-10 w-full text-center"
+    >
+      Swipe down <i class="pi pi-arrow-down"></i>
+    </div>
+
+    <AudioWave class="absolute bottom-0 w-full left-0" />
   </div>
 </template>

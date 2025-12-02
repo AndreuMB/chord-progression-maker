@@ -14,9 +14,21 @@
   --terciary: #bfc0c0;
 }
 
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-terciary: var(--terciary);
+  --color-primary-test: var(--terciary);
+}
+
 @font-face {
   font-family: bitCount;
   src: url(BitcountGridDouble.ttf);
+}
+
+@font-face {
+  font-family: scienceGothic;
+  src: url(ScienceGothic.ttf);
 }
 
 @font-face {
@@ -36,7 +48,11 @@
 }
 
 h1 {
-  font-family: libertinusKeyboard;
+  font-family: scienceGothic;
+}
+
+.simple-font {
+  font-family: scienceGothic;
 }
 
 .buttons {
