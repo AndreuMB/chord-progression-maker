@@ -16,5 +16,3 @@ declare global {
     keyUp?: (note: string, frequency: number) => void
   }
 }
-
-export {}

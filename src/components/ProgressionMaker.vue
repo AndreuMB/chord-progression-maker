@@ -192,16 +192,16 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex items-center bg-secondary p-10">
+  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-10">
     <!-- options -->
-    <div class="flex flex-col gap-2">
+    <div class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10">
       <!-- scales -->
-      <div class="flex flex-col gap-2 border p-2 justify-center rounded text-lg">
-        <div class="buttons flex flex-col justify-between gap-1">
-          <button class="bg-terciary!" @click="() => (chords = [])">
+      <div class="flex flex-col gap-2 border p-2 justify-center rounded">
+        <div class="buttons flex lg:flex-col not-lg:flex-wrap justify-around gap-1">
+          <button class="bg-terciary! not-lg:w-8" @click="() => (chords = [])">
             <i class="pi pi-eraser"></i>
           </button>
-          <button v-for="note in notes" @click="setNote(note)">
+          <button v-for="note in notes" @click="setNote(note)" class="h-8 not-lg:w-8 w-full">
             {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
           </button>
           <select class="text-secondary bg-primary rounded p-1 text-center" v-model="scaleSuffix">

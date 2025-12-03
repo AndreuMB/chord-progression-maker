@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import type { QwertyOptions } from '@/types/qwerty-hancock'
 import { Piano } from '@tonejs/piano/build/piano/Piano'
 import type { IChord } from '@/assets/guitarChordsInterface'
 import PianoChord from './PianoChord.vue'
 import * as Tone from 'tone'
 
-defineProps<{
+const props = defineProps<{
   chords: IChord[]
   fullChords: IChord[]
   fullChordsToggle: boolean
 }>()
+
+watch(
+  () => props.fullChordsToggle,
+  () => {
+    updateKeyboard()
+  },
+)
 
 const volume = ref<number>(50)
 
@@ -24,24 +31,73 @@ pianoSound.connect(volumeNode)
 const loading = ref(true)
 
 const keys = ref<ChildNode | null>(null)
+const keyboardContainer = ref<HTMLElement | null>(null)
+
+let options: QwertyOptions = {
+  id: '',
+  width: 0,
+  height: 0,
+}
+
+let resizeTimeout: number | null = null
+function handleResize() {
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+
+  // debounce 150ms
+  resizeTimeout = window.setTimeout(() => {
+    updateKeyboard()
+  }, 150)
+}
 
 onMounted(async () => {
   await pianoSound.load()
 
-  const computedStyle = window.getComputedStyle(document.body)
+  createKeyboard()
+
+  // save ref for delete keys
+  const keyboardEl = document.getElementById('keyboard')
+  if (!keyboardEl) return
+  keys.value = keyboardEl.firstChild
+
+  window.addEventListener('resize', handleResize)
+
+  loading.value = false
+})
+
+function calcKeyboardSize() {
+  const size = {
+    width: 0,
+    height: 0,
+  }
+
+  if (!keyboardContainer.value) return size
+  // const availableWidth = document.body.offsetWidth
+  const availableWidth = keyboardContainer.value.offsetWidth || document.body.offsetWidth
 
   const MAX_WIDTH = 1200
   const WIDTH_PIANO = 56
-  const pianoWidth = (document.body.offsetWidth * WIDTH_PIANO) / 100
+  const pianoWidth = (availableWidth * WIDTH_PIANO) / 80
 
   const MAX_HEIGHT = 380
   const HEIGHT_PIANO = 36
-  const pianoHeight = (document.body.offsetHeight * HEIGHT_PIANO) / 100
+  // const pianoHeight = (document.body.offsetHeight * HEIGHT_PIANO) / 100
+  const pianoHeight = HEIGHT_PIANO + pianoWidth / 3
 
-  const options: QwertyOptions = {
+  size.width = pianoWidth > MAX_WIDTH ? MAX_WIDTH : pianoWidth
+  size.height = pianoHeight > MAX_HEIGHT ? MAX_HEIGHT : pianoHeight
+
+  return size
+}
+
+function createKeyboard() {
+  const computedStyle = window.getComputedStyle(document.body)
+
+  const size = calcKeyboardSize()
+
+  options = {
     id: 'keyboard',
-    width: pianoWidth > MAX_WIDTH ? MAX_WIDTH : pianoWidth,
-    height: pianoHeight > MAX_HEIGHT ? MAX_HEIGHT : pianoHeight,
+    width: size.width,
+    height: size.height,
     octaves: 2,
     startNote: 'C4',
     whiteKeyColour: 'white',
@@ -56,13 +112,15 @@ onMounted(async () => {
   keyboard.keyUp = (note) => {
     pianoSound.keyUp({ note })
   }
+}
 
-  const keyboardEl = document.getElementById('keyboard')
-  if (!keyboardEl) return
-  keys.value = keyboardEl.firstChild
+async function updateKeyboard() {
+  await nextTick()
 
-  loading.value = false
-})
+  const size = calcKeyboardSize()
+  options = { ...options, ...size }
+  new QwertyHancock(options)
+}
 
 function cleanKeyboard() {
   if (!keys.value) return
@@ -89,7 +147,8 @@ const handleChangeVolume = () => {
 </script>
 
 <template>
-  <div class="w-10 flex justify-between gap-4 absolute top-2 left-2 p-2">
+  <!-- volume slide -->
+  <!-- <div class="w-10 flex justify-between gap-4 absolute top-2 left-2 p-2">
     <i class="pi pi-volume-up"></i>
     <input
       type="range"
@@ -100,11 +159,11 @@ const handleChangeVolume = () => {
       v-model="volume"
       @change="handleChangeVolume"
     />
-  </div>
+  </div> -->
   <div v-show="loading === false" class="flex gap-12 text-center items-center justify-center">
-    <!-- chord progression and piano -->
-    <div class="flex flex-col gap-10 items-center">
-      <div class="playButtons flex flex-wrap justify-around w-full">
+    <!-- chord progression and piano container -->
+    <div ref="keyboardContainer" class="flex flex-col gap-10 items-center">
+      <div class="playButtons flex flex-wrap justify-around w-full gap-4">
         <div v-for="(chord, index) in chords">
           <PianoChord
             :pianoSound="pianoSound"
