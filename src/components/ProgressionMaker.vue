@@ -6,6 +6,7 @@ import type { IChord } from '@/assets/guitarChordsInterface'
 import PianoKeyboard from '@/components/PianoKeyboard.vue'
 import GuitarDiagram from '@/components/GuitarDiagram.vue'
 import ToggleCheckbox from '@/components/ToggleCheckbox.vue'
+import NoteButton from './NoteButton.vue'
 
 const guitarChordsToggle = ref(false)
 const fullChordsToggle = ref(false)
@@ -29,6 +30,7 @@ const fullChords = ref<IChord[]>([])
 const chords = ref<IChord[]>([])
 
 const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+const notesGroup = [['C', 'C#'], ['D', 'D#'], ['E'], ['F', 'F#'], ['G', 'G#'], ['A', 'A#'], ['B']]
 
 const scaleSuffix = ref<string>('major')
 
@@ -194,24 +196,46 @@ const chordsToIChords = (notes: scaleChords) => {
 <template>
   <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-10">
     <!-- options -->
-    <div class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10">
+    <div
+      class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10 not-lg:w-full lg:min-w-40 justify-around"
+    >
       <!-- scales -->
-      <div class="flex flex-col gap-2 border p-2 justify-center rounded">
-        <div class="buttons flex lg:flex-col not-lg:flex-wrap justify-around gap-1">
-          <button class="bg-terciary! not-lg:w-8" @click="() => (chords = [])">
+      <div class="flex flex-col gap-2 border p-2 justify-center rounded w-full">
+        <!-- not-lg:max-w-100 -->
+        <div class="buttons flex lg:flex-col not-lg:flex-wrap justify-around gap-1 h-full">
+          <button class="bg-terciary! w-full" @click="() => (chords = [])">
             <i class="pi pi-eraser"></i>
           </button>
-          <button v-for="note in notes" @click="setNote(note)" class="h-8 not-lg:w-8 w-full">
+          <!-- <button v-for="note in notes" @click="setNote(note)" class="h-8 not-lg:w-8 w-full">
             {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
-          </button>
-          <select class="text-secondary bg-primary rounded p-1 text-center" v-model="scaleSuffix">
+          </button> -->
+          <div class="flex gap-1 w-full justify-around lg:flex-col">
+            <div
+              v-for="noteGroup in notesGroup"
+              class="w-full flex justify-around gap-1 not-lg:flex-col"
+            >
+              <!-- <button v-for="note in noteGroup" @click="setNote(note)" class="h-full w-full">
+                {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
+              </button> -->
+              <NoteButton
+                :label="note"
+                v-for="note in noteGroup"
+                @click="setNote(note)"
+                class="h-full w-full"
+              />
+            </div>
+          </div>
+          <select
+            class="text-secondary bg-primary rounded p-1 text-center w-full"
+            v-model="scaleSuffix"
+          >
             <option value="major" selected>M</option>
             <option value="minor">m</option>
           </select>
         </div>
       </div>
       <!-- toggles -->
-      <div class="flex flex-col gap-2 border p-2 justify-center rounded">
+      <div class="flex flex-col border p-2 gap-2 justify-around rounded">
         <ToggleCheckbox label="Guitar Chords" @click="(toggle) => (guitarChordsToggle = toggle)" />
         <ToggleCheckbox label="Full Chords" @click="(toggle) => (fullChordsToggle = toggle)" />
       </div>

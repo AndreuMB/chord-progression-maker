@@ -9,9 +9,9 @@
   --terciary: #ffef9f; */
 
   /* dark theme */
-  --primary: #ffffff;
+  --primary: #eaeaea;
   --secondary: #2d3142;
-  --terciary: #bfc0c0;
+  --terciary: #a4a4a4;
 }
 
 @theme {
