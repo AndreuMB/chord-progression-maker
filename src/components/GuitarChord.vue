@@ -58,5 +58,15 @@ const chordToFingers = (chord: IChord) => {
 </script>
 
 <template>
-  <div ref="svgRef"></div>
+  <!-- **:fill-primary **:stroke-primary  -->
+  <div class="guitar-chord **:stroke-primary **:fill-primary" ref="svgRef"></div>
 </template>
+
+<style scoped>
+:deep(.finger-text) {
+  stroke: var(--color-secondary);
+  fill: var(--color-secondary);
+  font-size: 2.2em;
+  font-weight: 900;
+}
+</style>

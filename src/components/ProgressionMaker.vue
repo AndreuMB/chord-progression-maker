@@ -194,7 +194,7 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-10">
+  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-10 gap-10">
     <!-- options -->
     <div
       class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10 not-lg:w-full lg:min-w-40 justify-around"
@@ -206,17 +206,11 @@ const chordsToIChords = (notes: scaleChords) => {
           <button class="bg-terciary! w-full" @click="() => (chords = [])">
             <i class="pi pi-eraser"></i>
           </button>
-          <!-- <button v-for="note in notes" @click="setNote(note)" class="h-8 not-lg:w-8 w-full">
-            {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
-          </button> -->
           <div class="flex gap-1 w-full justify-around lg:flex-col">
             <div
               v-for="noteGroup in notesGroup"
               class="w-full flex justify-around gap-1 not-lg:flex-col"
             >
-              <!-- <button v-for="note in noteGroup" @click="setNote(note)" class="h-full w-full">
-                {{ scaleSuffix == 'major' ? note : note.toLowerCase() }}
-              </button> -->
               <NoteButton
                 :label="note"
                 v-for="note in noteGroup"
@@ -245,7 +239,7 @@ const chordsToIChords = (notes: scaleChords) => {
     <div class="flex flex-col justify-center h-full m-auto">
       <div
         v-if="chords && chords.length > 0"
-        class="flex flex-col text-center items-center justify-center gap-10 border p-10 rounded"
+        class="flex flex-col text-center items-center justify-center gap-10 border sm:p-10 p-5 rounded"
       >
         <PianoKeyboard
           :chords="chords"

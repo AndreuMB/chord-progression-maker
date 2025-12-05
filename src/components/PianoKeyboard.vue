@@ -160,10 +160,16 @@ const handleChangeVolume = () => {
       @change="handleChangeVolume"
     />
   </div> -->
-  <div v-show="loading === false" class="flex gap-12 text-center items-center justify-center">
+  <div
+    v-show="loading === false"
+    class="flex gap-12 text-center items-center justify-center not-sm:flex-col"
+  >
     <!-- chord progression and piano container -->
-    <div ref="keyboardContainer" class="flex flex-col gap-10 items-center">
-      <div class="playButtons flex flex-wrap justify-around w-full gap-4">
+    <div ref="keyboardContainer" class="flex flex-col gap-10 items-center w-full">
+      <div
+        :class="fullChordsToggle ? ['not-sm:hidden'] : []"
+        class="playButtons flex flex-wrap justify-around w-full gap-4"
+      >
         <div v-for="(chord, index) in chords">
           <PianoChord
             :pianoSound="pianoSound"
@@ -175,9 +181,14 @@ const handleChangeVolume = () => {
       </div>
       <div id="keyboard"></div>
     </div>
-    <div v-if="fullChordsToggle" class="border-2 rounded h-full"></div>
+    <!-- separator -->
+    <div v-if="fullChordsToggle" class="border-2 rounded h-full not-sm:hidden"></div>
     <!-- full chords -->
-    <div v-if="fullChordsToggle" class="playButtons flex flex-col justify-between h-full">
+    <!-- playButtons flex flex-col justify-between h-full -->
+    <div
+      v-if="fullChordsToggle"
+      class="playButtons flex not-sm:flex-wrap sm:flex-col justify-around h-full gap-4"
+    >
       <div v-for="chord in fullChords">
         <PianoChord
           :pianoSound="pianoSound"
