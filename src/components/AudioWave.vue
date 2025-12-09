@@ -27,8 +27,6 @@
   <!--Waves end-->
 </template>
 <style scoped>
-@import url(//fonts.googleapis.com/css?family=Lato:300:400);
-
 .waves {
   width: 100%;
   margin-bottom: -7px;

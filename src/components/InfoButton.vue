@@ -12,7 +12,9 @@ const showInfoDialog = () => {
       commandfor="dialog"
       class="bg-transparent! cursor-default! border-0!"
     >
-      <i class="pi pi-info-circle text-primary! hover:text-primary-light! cursor-pointer!"></i>
+      <i
+        class="pi pi-info-circle text-primary! hover:text-primary-light! cursor-pointer! bg-secondary p-[2px] rounded"
+      ></i>
     </button>
     <el-dialog>
       <dialog

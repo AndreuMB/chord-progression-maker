@@ -10,11 +10,9 @@ const progressionMaker = ref<HTMLDivElement>()
 <template>
   <div class="scroll-smooth h-dvh w-dvw">
     <Welcome class="" v-if="progressionMaker" :scrollTo="progressionMaker" />
-    <div ref="progressionMaker" class="relative">
+    <div ref="progressionMaker" class="relative overflow-hidden">
       <InfoButton class="absolute top-2 right-2" />
-      <h2 class="text-6xl opacity-20 rotateTitle overflow-hidden text-nowrap">
-        CHORD PROGRESSION MAKER
-      </h2>
+      <h2 class="text-6xl opacity-20 rotateTitle text-nowrap">CHORD PROGRESSION MAKER</h2>
       <ProgressionMaker />
     </div>
   </div>
