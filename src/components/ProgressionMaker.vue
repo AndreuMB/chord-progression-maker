@@ -194,7 +194,7 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-10 gap-10">
+  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-4 sm:p-12 gap-10">
     <!-- options -->
     <div
       class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10 not-lg:w-full lg:min-w-40 justify-around"
@@ -236,29 +236,25 @@ const chordsToIChords = (notes: scaleChords) => {
     </div>
 
     <!-- keyboard and guitar -->
-    <div class="flex flex-col justify-center h-full m-auto">
-      <div
-        v-if="chords && chords.length > 0"
-        class="flex flex-col text-center items-center justify-center gap-10 border sm:p-10 p-5 rounded"
-      >
-        <PianoKeyboard
-          :chords="chords"
-          :fullChords="fullChords"
-          :fullChordsToggle="fullChordsToggle"
-        />
-        <GuitarDiagram
-          v-if="guitarChordsToggle"
-          :chords="chords"
-          :fullChords="fullChords"
-          :fullChordsToggle="fullChordsToggle"
-        />
-      </div>
-      <div
-        v-else
-        class="flex flex-col text-center items-center justify-center gap-10 border p-10 rounded text-2xl"
-      >
-        <p class="animate-pulse">SELECT A SCALE TO START</p>
-      </div>
+
+    <div
+      v-if="chords && chords.length > 0"
+      class="flex flex-col justify-center sm:gap-10 gap-5 border rounded sm:p-10 p-2 w-full m-auto"
+    >
+      <PianoKeyboard
+        :chords="chords"
+        :fullChords="fullChords"
+        :fullChordsToggle="fullChordsToggle"
+      />
+      <GuitarDiagram
+        v-if="guitarChordsToggle"
+        :chords="chords"
+        :fullChords="fullChords"
+        :fullChordsToggle="fullChordsToggle"
+      />
+    </div>
+    <div v-else class="flex flex-col text-center items-center justify-center text-2xl w-full">
+      <div class="border rounded p-10"><p class="animate-pulse">SELECT A SCALE TO START</p></div>
     </div>
   </main>
 </template>

@@ -23,8 +23,8 @@ const progressionMaker = ref<HTMLDivElement>()
 <style scoped>
 .rotateTitle {
   position: absolute;
-  right: 0;
-  bottom: 10px;
+  right: -14px;
+  bottom: 0px;
   transform: translate(100%, 0) rotate(-90deg);
   transform-origin: bottom left;
 }

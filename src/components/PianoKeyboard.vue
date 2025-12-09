@@ -59,7 +59,13 @@ onMounted(async () => {
   if (!keyboardEl) return
   keys.value = keyboardEl.firstChild
 
-  window.addEventListener('resize', handleResize)
+  // window.addEventListener('resize', handleResize)
+
+  const ro = new ResizeObserver(() => {
+    handleResize()
+  })
+
+  if (keyboardContainer.value) ro.observe(keyboardContainer.value)
 
   loading.value = false
 })
@@ -71,12 +77,16 @@ function calcKeyboardSize() {
   }
 
   if (!keyboardContainer.value) return size
+
   // const availableWidth = document.body.offsetWidth
   const availableWidth = keyboardContainer.value.offsetWidth || document.body.offsetWidth
 
   const MAX_WIDTH = 1200
   const WIDTH_PIANO = 56
-  const pianoWidth = (availableWidth * WIDTH_PIANO) / 80
+  // const pianoWidth = (availableWidth * WIDTH_PIANO) / 80
+  const pianoWidth = availableWidth
+
+  console.log('enter keyboard calc', availableWidth)
 
   const MAX_HEIGHT = 380
   const HEIGHT_PIANO = 36
@@ -162,7 +172,7 @@ const handleChangeVolume = () => {
   </div> -->
   <div
     v-show="loading === false"
-    class="flex gap-12 text-center items-center justify-center not-sm:flex-col"
+    class="flex gap-6 sm:gap-12 text-center items-center justify-center not-sm:flex-col"
   >
     <!-- chord progression and piano container -->
     <div ref="keyboardContainer" class="flex flex-col gap-10 items-center w-full">
@@ -181,16 +191,14 @@ const handleChangeVolume = () => {
       </div>
       <div id="keyboard"></div>
     </div>
-    <!-- separator -->
-    <div v-if="fullChordsToggle" class="border-2 rounded h-full not-sm:hidden"></div>
-    <!-- full chords -->
-    <!-- playButtons flex flex-col justify-between h-full -->
-    <div
-      v-if="fullChordsToggle"
-      class="playButtons flex not-sm:flex-wrap sm:flex-col justify-around h-full gap-4"
-    >
-      <div v-for="chord in fullChords">
+    <div v-if="fullChordsToggle" class="flex gap-6">
+      <!-- separator -->
+      <div class="border-2 rounded not-sm:hidden"></div>
+      <!-- full chords -->
+      <!-- playButtons flex flex-col justify-between h-full -->
+      <div class="playButtons flex not-sm:flex-wrap sm:flex-col h-full gap-4 w-full justify-center">
         <PianoChord
+          v-for="chord in fullChords"
           :pianoSound="pianoSound"
           :chord="chord.key + ' ' + chord.suffix"
           @chord-play="handleChordPlay"
@@ -199,7 +207,7 @@ const handleChangeVolume = () => {
     </div>
   </div>
   <div v-if="loading !== false">
-    <div role="status">
+    <div role="status" class="flex justify-center">
       <svg
         aria-hidden="true"
         class="w-8 h-8 text-secondary animate-spin fill-primary"

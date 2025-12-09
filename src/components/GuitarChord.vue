@@ -59,7 +59,7 @@ const chordToFingers = (chord: IChord) => {
 
 <template>
   <!-- **:fill-primary **:stroke-primary  -->
-  <div class="guitar-chord **:stroke-primary **:fill-primary" ref="svgRef"></div>
+  <div class="guitar-chord **:stroke-primary **:fill-primary h-full" ref="svgRef"></div>
 </template>
 
 <style scoped>

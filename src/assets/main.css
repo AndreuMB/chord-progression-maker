@@ -9,9 +9,39 @@
   --terciary: #ffef9f; */
 
   /* dark theme */
-  --primary: #eaeaea;
+  /* --primary: #eaeaea;
   --secondary: #2d3142;
-  --terciary: #a4a4a4;
+  --terciary: #a4a4a4; */
+
+  /* test theme 1*/
+  /* idk */
+  --primary: #018790;
+  /* backgroung */
+  --secondary: #005461;
+  /* idk */
+  --terciary: #00b7b5;
+  /* waves */
+  --accent: #f4f4f4;
+
+  /* test theme 2*/
+  /* idk */
+  --primary: #450693;
+  /* backgroung */
+  --secondary: #8c00ff;
+  /* idk */
+  --terciary: #ff3f7f;
+  /* waves */
+  --accent: #ffc400;
+
+  /* test theme 3*/
+  /* idk */
+  --primary: #ececbb;
+  /* backgroung */
+  --secondary: #239ba7;
+  /* idk */
+  --terciary: #7adaa5;
+  /* waves */
+  --accent: #7adaa5;
 }
 
 @theme {

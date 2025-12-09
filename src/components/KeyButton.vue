@@ -29,7 +29,6 @@ button {
   --button_color: var(--secondary);
   --button_outline_color: var(--primary);
   padding: 0;
-  width: 180px;
   font-size: 17px;
   font-weight: bold;
   border: none;

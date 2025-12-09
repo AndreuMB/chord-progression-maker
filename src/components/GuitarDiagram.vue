@@ -11,12 +11,12 @@ defineProps<{
 
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div v-if="fullChordsToggle" class="flex min-h-20 bg-secondary justify-center p-2">
+    <div v-if="fullChordsToggle" class="flex bg-secondary justify-center">
       <div v-for="chord in fullChords" class="w-1/6 flex flex-col justify-center h-full">
         <GuitarChord :chord="chord" />
       </div>
     </div>
-    <div v-else class="flex min-h-20 bg-secondary justify-center p-2">
+    <div v-else class="flex bg-secondary justify-center">
       <div v-for="chord in chords" class="min-w-1/6 flex flex-col justify-center h-full">
         <GuitarChord :chord="chord" />
       </div>

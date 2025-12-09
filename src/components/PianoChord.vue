@@ -60,5 +60,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <KeyButton ref="buttonRef" @click="playChord(chord)">Play {{ chord }}</KeyButton>
+  <KeyButton class="min-w-30 sm:min-w-50" ref="buttonRef" @click="playChord(chord)"
+    ><span class="not-sm:hidden">Play </span> {{ chord }}</KeyButton
+  >
 </template>
