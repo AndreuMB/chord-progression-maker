@@ -28,6 +28,7 @@ You can check it out [**here**](https://chordprogressionmanker.netlify.app/)!
 - **Fonts**:
   - [The Bitcount Project Authors](https://github.com/petrvanblokland/TYPETR-Bitcount)
   - [The Libertinus Keyboard Project Authors](https://github.com/googlefonts/libertinus)
+  - [ScienceGothic Project Authors](https://github.com/googlefonts/science-gothic/OFL.txt)
 
 ---
 
