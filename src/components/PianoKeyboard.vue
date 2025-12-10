@@ -82,11 +82,9 @@ function calcKeyboardSize() {
   const availableWidth = keyboardContainer.value.offsetWidth || document.body.offsetWidth
 
   const MAX_WIDTH = 1200
-  const WIDTH_PIANO = 56
+  // const WIDTH_PIANO = 56
   // const pianoWidth = (availableWidth * WIDTH_PIANO) / 80
   const pianoWidth = availableWidth
-
-  console.log('enter keyboard calc', availableWidth)
 
   const MAX_HEIGHT = 380
   const HEIGHT_PIANO = 36
@@ -98,6 +96,8 @@ function calcKeyboardSize() {
 
   return size
 }
+
+const keyboard = ref<QwertyHancock | null>(null)
 
 function createKeyboard() {
   const computedStyle = window.getComputedStyle(document.body)
@@ -114,22 +114,24 @@ function createKeyboard() {
     blackKeyColour: 'black',
     activeColour: computedStyle.getPropertyValue('--terciary'),
   }
-  const keyboard = new QwertyHancock(options)
+  keyboard.value = new QwertyHancock(options)
 
-  keyboard.keyDown = (note) => {
+  keyboard.value.keyDown = (note) => {
     pianoSound.keyDown({ note })
   }
-  keyboard.keyUp = (note) => {
+  keyboard.value.keyUp = (note) => {
     pianoSound.keyUp({ note })
   }
+
+  // save ref new keys for delete keys
+  const keyboardEl = document.getElementById('keyboard')
+  if (!keyboardEl) return
+  keys.value = keyboardEl.firstChild
 }
 
 async function updateKeyboard() {
   await nextTick()
-
-  const size = calcKeyboardSize()
-  options = { ...options, ...size }
-  new QwertyHancock(options)
+  createKeyboard()
 }
 
 function cleanKeyboard() {
@@ -144,15 +146,9 @@ function cleanKeyboard() {
 let timeout = 0
 function handleChordPlay(name: string) {
   clearTimeout(timeout)
-  cleanKeyboard()
+  // cleanKeyboard()
   const duration = 1.5
   timeout = setTimeout(() => cleanKeyboard(), duration * 1000)
-}
-
-const handleChangeVolume = () => {
-  const gain = volume.value / 100
-  pianoSound.strings.value = volume.value / 10
-  volumeNode.volume.value = Tone.gainToDb(gain)
 }
 </script>
 

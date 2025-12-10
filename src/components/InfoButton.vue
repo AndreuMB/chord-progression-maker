@@ -1,8 +1,4 @@
-<script setup lang="ts">
-const showInfoDialog = () => {
-  console.log('test')
-}
-</script>
+<script setup lang="ts"></script>
 <template>
   <div>
     <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
@@ -13,7 +9,7 @@ const showInfoDialog = () => {
       class="bg-transparent! cursor-default! border-0!"
     >
       <i
-        class="pi pi-info-circle text-primary! hover:text-primary-light! cursor-pointer! bg-secondary p-[2px] rounded"
+        class="pi pi-info-circle text-primary! hover:text-primary-light! cursor-pointer! bg-secondary p-[2px] rounded-2xl"
       ></i>
     </button>
     <el-dialog>

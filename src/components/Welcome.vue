@@ -8,7 +8,6 @@ const props = defineProps<{
 }>()
 
 const scrollToApp = () => {
-  console.log('scroll yo')
   props.scrollTo.scrollIntoView({ behavior: 'smooth' })
 }
 

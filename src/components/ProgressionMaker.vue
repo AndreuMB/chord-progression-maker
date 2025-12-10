@@ -194,7 +194,9 @@ const chordsToIChords = (notes: scaleChords) => {
 </script>
 
 <template>
-  <main class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-4 sm:p-12 gap-10">
+  <main
+    class="h-dvh w-dvw flex not-lg:flex-col items-center bg-secondary p-4 sm:p-12 gap-2 sm:gap-10"
+  >
     <!-- options -->
     <div
       class="flex lg:flex-col sm:flex-row flex-col gap-2 lg:mr-10 not-lg:w-full lg:min-w-40 justify-around"
