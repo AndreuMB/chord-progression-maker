@@ -14,6 +14,7 @@ You can check it out [**here**](https://chordprogressionmanker.netlify.app/)!
 - Display corresponding **guitar chord diagrams**.
 - Play chords with built-in sound.
 - Virtual keyboard to play.
+- You can play the keyboard using the keys of your keyboard. 1-2-3-4 for chords and A-W-S-E-D-F-T-G-... For the notes, think about it like the keys of your keyboard is the same layout as the keys of the piano!
 
 ---
 
@@ -27,7 +28,6 @@ You can check it out [**here**](https://chordprogressionmanker.netlify.app/)!
 - [**PrimeVue Icons**](https://primevue.org/icons) – Icons
 - **Fonts**:
   - [The Bitcount Project Authors](https://github.com/petrvanblokland/TYPETR-Bitcount)
-  - [The Libertinus Keyboard Project Authors](https://github.com/googlefonts/libertinus)
   - [ScienceGothic Project Authors](https://github.com/googlefonts/science-gothic/OFL.txt)
 
 ---

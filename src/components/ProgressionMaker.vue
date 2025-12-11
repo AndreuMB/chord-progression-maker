@@ -29,7 +29,6 @@ const fullChords = ref<IChord[]>([])
 
 const chords = ref<IChord[]>([])
 
-const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 const notesGroup = [['C', 'C#'], ['D', 'D#'], ['E'], ['F', 'F#'], ['G', 'G#'], ['A', 'A#'], ['B']]
 
 const scaleSuffix = ref<string>('major')

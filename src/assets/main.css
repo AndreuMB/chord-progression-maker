@@ -3,42 +3,12 @@
 @import 'primeicons/primeicons.css';
 
 :root {
-  /* light theme maybe */
-  /* --primary: #90f1ef;
-  --secondary: #ff7497;
-  --terciary: #ffef9f; */
-
-  /* dark theme */
-  /* --primary: #eaeaea;
-  --secondary: #2d3142;
-  --terciary: #a4a4a4; */
-
-  /* test theme 1*/
-  /* idk */
-  --primary: #018790;
-  /* backgroung */
-  --secondary: #005461;
-  /* idk */
-  --terciary: #00b7b5;
-  /* waves */
-  --accent: #f4f4f4;
-
-  /* test theme 2*/
-  /* idk */
-  --primary: #450693;
-  /* backgroung */
-  --secondary: #8c00ff;
-  /* idk */
-  --terciary: #ff3f7f;
-  /* waves */
-  --accent: #ffc400;
-
   /* test theme 3*/
-  /* idk */
+  /* text */
   --primary: #ececbb;
   /* backgroung */
   --secondary: #239ba7;
-  /* idk */
+  /* accents */
   --terciary: #7adaa5;
   /* waves */
   --accent: #7adaa5;
@@ -48,7 +18,6 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-terciary: var(--terciary);
-  --color-primary-test: var(--terciary);
 }
 
 @font-face {
@@ -59,11 +28,6 @@
 @font-face {
   font-family: scienceGothic;
   src: url(ScienceGothic.ttf);
-}
-
-@font-face {
-  font-family: libertinusKeyboard;
-  src: url(LibertinusKeyboard.ttf);
 }
 
 @theme {
